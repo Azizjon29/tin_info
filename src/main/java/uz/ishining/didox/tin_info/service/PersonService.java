@@ -6,6 +6,7 @@ import retrofit2.Call;
 import uz.ishining.didox.tin_info.dto.response.IndividualPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.LegalPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.NdsInfoResponse;
+import uz.ishining.didox.tin_info.enums.Lang;
 import uz.ishining.didox.tin_info.model.LegalPersonUz;
 import uz.ishining.didox.tin_info.model.PersonUz;
 import uz.ishining.didox.tin_info.repository.IndividualPersonRuRepository;
@@ -48,10 +49,21 @@ public class PersonService {
         this.personUzRepository = personUzRepository;
     }
 
-    public Serializable getInfo(String tin, String lang) throws IOException {
-        Call<LegalPersonResponse> legalRequest = taxService.getLegalPersonByTin(lang,tin);
-        Call<IndividualPersonResponse> individualRequest = taxService.getIndividualPersonByTin(lang,tin);
-        Call<NdsInfoResponse> ndsRequest = taxService.getNdsInfoByTin(tin);
-        return legalRequest.execute().body();
+    public Serializable getInfo(String tin, Lang lang) throws IOException {
+
+        switch (lang) {
+            case UZ -> {
+                Call<LegalPersonResponse> legalRequest = taxService.getLegalPersonByTin(lang.toValue(), tin);
+                Call<IndividualPersonResponse> individualRequest = taxService.getIndividualPersonByTin(lang.toValue(), tin);
+                Call<NdsInfoResponse> ndsRequest = taxService.getNdsInfoByTin(tin);
+                return legalRequest.execute().body();
+            }
+            default -> {
+                Call<LegalPersonResponse> legalRequest = taxService.getLegalPersonByTin(lang.toValue(), tin);
+                Call<IndividualPersonResponse> individualRequest = taxService.getIndividualPersonByTin(lang.toValue(), tin);
+                Call<NdsInfoResponse> ndsRequest = taxService.getNdsInfoByTin(tin);
+                return legalRequest.execute().body();
+            }
+        }
     }
 }

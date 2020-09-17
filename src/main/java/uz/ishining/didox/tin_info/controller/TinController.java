@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import uz.ishining.didox.tin_info.dto.response.LegalPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.TinInfoResponse;
+import uz.ishining.didox.tin_info.enums.Lang;
 import uz.ishining.didox.tin_info.service.PersonService;
 import uz.ishining.didox.tin_info.service.TaxService;
 
@@ -30,6 +31,6 @@ public class TinController {
     @GetMapping("/taxinfo")
     public Serializable getTinInfo(@RequestParam String tin,
                                    @RequestParam(required = false, defaultValue = "ru") String lang) throws IOException {
-        return personService.getInfo(tin, lang);
+        return personService.getInfo(tin, Lang.fromValue(lang));
     }
 }
