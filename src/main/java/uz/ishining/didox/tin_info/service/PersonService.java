@@ -6,9 +6,14 @@ import retrofit2.Call;
 import uz.ishining.didox.tin_info.dto.response.IndividualPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.LegalPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.NdsInfoResponse;
-import uz.ishining.didox.tin_info.repository.IndividualPersonRepository;
-import uz.ishining.didox.tin_info.repository.LegalPersonRepository;
-import uz.ishining.didox.tin_info.repository.PersonRepository;
+import uz.ishining.didox.tin_info.model.LegalPersonUz;
+import uz.ishining.didox.tin_info.model.PersonUz;
+import uz.ishining.didox.tin_info.repository.IndividualPersonRuRepository;
+import uz.ishining.didox.tin_info.repository.IndividualPersonUzRepository;
+import uz.ishining.didox.tin_info.repository.LegalPersonRuRepository;
+import uz.ishining.didox.tin_info.repository.LegalPersonUzRepository;
+import uz.ishining.didox.tin_info.repository.PersonRuRepository;
+import uz.ishining.didox.tin_info.repository.PersonUzRepository;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,18 +23,29 @@ public class PersonService {
 
     private TaxService taxService;
 
-    private LegalPersonRepository legalPersonRepository;
+    private LegalPersonRuRepository legalPersonRuRepository;
 
-    private IndividualPersonRepository individualPersonRepository;
+    private LegalPersonUzRepository legalPersonUzRepository;
 
-    private PersonRepository personRepository;
+    private IndividualPersonRuRepository individualPersonRuRepository;
 
-    @Autowired
-    public PersonService(TaxService taxService, LegalPersonRepository legalPersonRepository, IndividualPersonRepository individualPersonRepository, PersonRepository personRepository) {
+    private IndividualPersonUzRepository individualPersonUzRepository;
+
+    private PersonRuRepository personRuRepository;
+
+    private PersonUzRepository personUzRepository;
+
+    public PersonService(TaxService taxService,
+                         LegalPersonRuRepository legalPersonRuRepository, LegalPersonUzRepository legalPersonUzRepository,
+                         IndividualPersonRuRepository individualPersonRuRepository, IndividualPersonUzRepository individualPersonUzRepository,
+                         PersonRuRepository personRuRepository, PersonUzRepository personUzRepository) {
         this.taxService = taxService;
-        this.legalPersonRepository = legalPersonRepository;
-        this.individualPersonRepository = individualPersonRepository;
-        this.personRepository = personRepository;
+        this.legalPersonRuRepository = legalPersonRuRepository;
+        this.legalPersonUzRepository = legalPersonUzRepository;
+        this.individualPersonRuRepository = individualPersonRuRepository;
+        this.individualPersonUzRepository = individualPersonUzRepository;
+        this.personRuRepository = personRuRepository;
+        this.personUzRepository = personUzRepository;
     }
 
     public Serializable getInfo(String tin, String lang) throws IOException {

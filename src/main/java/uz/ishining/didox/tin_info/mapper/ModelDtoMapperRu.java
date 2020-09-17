@@ -5,13 +5,13 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import uz.ishining.didox.tin_info.dto.response.IndividualPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.LegalPersonResponse;
-import uz.ishining.didox.tin_info.model.IndividualPerson;
-import uz.ishining.didox.tin_info.model.LegalPerson;
+import uz.ishining.didox.tin_info.model.IndividualPersonRu;
+import uz.ishining.didox.tin_info.model.LegalPersonRu;
 
 import java.text.SimpleDateFormat;
 
 @Mapper(componentModel = "spring")
-public abstract class ModelDtoMapper {
+public abstract class ModelDtoMapperRu {
 
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -46,7 +46,7 @@ public abstract class ModelDtoMapper {
             @Mapping(ignore = true, target = "dmodified"),
             @Mapping(ignore = true, target = "ddeleted")
     })
-    public abstract LegalPerson legalDtoToModel(LegalPersonResponse dto);
+    public abstract LegalPersonRu legalDtoToModel(LegalPersonResponse dto);
 
     @Mappings({
             @Mapping(source = "dto.tin",target = "tin"),
@@ -78,7 +78,7 @@ public abstract class ModelDtoMapper {
             @Mapping(ignore = true, target = "dmodified"),
             @Mapping(ignore = true, target = "ddeleted")
     })
-    public abstract LegalPerson ndsDtoToModel(LegalPersonResponse dto);
+    public abstract LegalPersonRu ndsDtoToModel(LegalPersonResponse dto);
 
     @Mappings({
             @Mapping(source = "dto.tin",target = "tin"),
@@ -97,7 +97,7 @@ public abstract class ModelDtoMapper {
             @Mapping(ignore = true, target = "dmodified"),
             @Mapping(ignore = true, target = "ddeleted")
     })
-    public abstract IndividualPerson individualPersonDtoToModel(IndividualPersonResponse dto);
+    public abstract IndividualPersonRu individualPersonDtoToModel(IndividualPersonResponse dto);
 
 
 

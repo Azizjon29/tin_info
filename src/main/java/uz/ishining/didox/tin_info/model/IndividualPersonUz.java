@@ -11,7 +11,7 @@ import java.util.Date;
 @DiscriminatorValue("INDIVIDUAL")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class IndividualPerson extends Person{
+public class IndividualPersonUz extends PersonUz{
 
     private String fullName;
 

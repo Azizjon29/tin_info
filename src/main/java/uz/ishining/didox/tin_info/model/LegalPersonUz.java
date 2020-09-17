@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("LEGAL")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class LegalPerson extends Person {
+public class LegalPersonUz extends PersonUz {
 
     private String shortName;
 

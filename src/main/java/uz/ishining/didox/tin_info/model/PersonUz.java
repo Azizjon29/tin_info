@@ -9,15 +9,18 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "PERSON")
+@Table(name = "PERSON_UZ", uniqueConstraints = {
+        @UniqueConstraint(columnNames={"tin"})
+})
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="PERSON_TYPE",
         discriminatorType = DiscriminatorType.STRING)
-public class Person extends BaseEntity{
+public class PersonUz extends BaseEntity{
 
     protected String tin;
 
