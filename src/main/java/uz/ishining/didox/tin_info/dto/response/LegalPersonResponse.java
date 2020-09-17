@@ -2,8 +2,10 @@ package uz.ishining.didox.tin_info.dto.response;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class LegalPersonResponse {
+public class LegalPersonResponse implements Serializable {
 
     private Integer ns10Code;
 
