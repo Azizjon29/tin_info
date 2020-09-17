@@ -16,6 +16,10 @@ public class LegalPerson extends Person {
 
     private String name;
 
+    private String statusCode;
+
+    private String statusName;
+
     private String mfo;
 
     private String account;
@@ -27,4 +31,23 @@ public class LegalPerson extends Person {
     private String director;
 
     private String accountant;
+
+    private Short isBudget;
+
+    //nds
+    private String regCode;
+
+    private String regDate;
+
+    private String type;
+
+    private String dateCreate;
+
+    private String fileGuid;
+
+    private String basisType;
+
+    private String targetPay;
+
+    private String appDueDate;
 }
