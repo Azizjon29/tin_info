@@ -12,7 +12,7 @@ public class NdsInfoResponse {
     private Data data;
 
     @lombok.Data
-    static class Data{
+    public static class Data{
 
         private String tin;
 
@@ -25,6 +25,10 @@ public class NdsInfoResponse {
         private String regDate;
 
         private String dateFrom;
+
+        private String type;
+
+        private String dateCreate;
 
         private String fileGuid;
 

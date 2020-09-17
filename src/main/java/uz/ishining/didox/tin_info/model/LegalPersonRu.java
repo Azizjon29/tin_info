@@ -50,4 +50,6 @@ public class LegalPersonRu extends PersonRu {
     private String targetPay;
 
     private String appDueDate;
+
+    private String dateFrom;
 }

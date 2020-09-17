@@ -37,7 +37,7 @@ public class BaseEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dmodified = new Date();
 
-    @Column(name = "DeletedAt", nullable = false)
+    @Column(name = "DeletedAt")
     @Temporal(TemporalType.TIMESTAMP)
     protected Date ddeleted;
 
