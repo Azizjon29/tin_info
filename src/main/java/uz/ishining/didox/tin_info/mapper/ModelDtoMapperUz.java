@@ -8,7 +8,9 @@ import uz.ishining.didox.tin_info.dto.response.IndividualPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.LegalPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.NdsInfoResponse;
 import uz.ishining.didox.tin_info.dto.response.TinInfoResponse;
+import uz.ishining.didox.tin_info.model.IndividualPersonRu;
 import uz.ishining.didox.tin_info.model.IndividualPersonUz;
+import uz.ishining.didox.tin_info.model.LegalPersonRu;
 import uz.ishining.didox.tin_info.model.LegalPersonUz;
 
 import java.text.ParseException;
@@ -153,9 +155,13 @@ public abstract class ModelDtoMapperUz {
             @Mapping(ignore = true, target = "passport"),
             @Mapping(ignore = true, target = "passOrg"),
             @Mapping(ignore = true, target = "passIssueDate"),
-            @Mapping(ignore = true, target = "districtId")
+            @Mapping(ignore = true, target = "districtId"),
+            @Mapping(expression = "java(model.getDcreated()!=null?sdfWithTime.format(model.getDcreated()):null)", target = "dcreated"),
+            @Mapping(expression = "java(model.getDmodified()!=null?sdfWithTime.format(model.getDmodified()):null)", target = "dmodified"),
+            @Mapping(expression = "java(model.getDdeleted()!=null?sdfWithTime.format(model.getDdeleted()):null)", target = "ddeleted"),
     })
     public abstract TinInfoResponse modelToDto(LegalPersonUz model);
+
     @Mappings({
             @Mapping(source = "model.tin", target = "tin"),
             @Mapping(source = "model.fullName", target = "shortName"),
@@ -174,7 +180,58 @@ public abstract class ModelDtoMapperUz {
             @Mapping(ignore = true, target = "oked"),
             @Mapping(ignore = true, target = "regCode"),
             @Mapping(ignore = true, target = "directorTin"),
-            @Mapping(ignore = true, target = "districtId")
+            @Mapping(ignore = true, target = "districtId"),
+            @Mapping(expression = "java(model.getDcreated()!=null?sdfWithTime.format(model.getDcreated()):null)", target = "dcreated"),
+            @Mapping(expression = "java(model.getDmodified()!=null?sdfWithTime.format(model.getDmodified()):null)", target = "dmodified"),
+            @Mapping(expression = "java(model.getDdeleted()!=null?sdfWithTime.format(model.getDdeleted()):null)", target = "ddeleted"),
     })
     public abstract TinInfoResponse modelToDto(IndividualPersonUz model);
+
+    @Mappings({
+            @Mapping(expression = "java(new java.util.Date())",target = "dmodified"),
+            @Mapping(source = "newDto.ns10Code",target = "ns10Code"),
+            @Mapping(source = "newDto.ns11Code",target = "ns11Code"),
+            @Mapping(source = "newDto.address",target = "address"),
+            @Mapping(source = "newDto.shortName",target = "shortName"),
+            @Mapping(source = "newDto.name",target = "name"),
+            @Mapping(source = "newDto.statusCode",target = "statusCode"),
+            @Mapping(source = "newDto.statusName",target = "statusName"),
+            @Mapping(source = "newDto.mfo",target = "mfo"),
+            @Mapping(source = "newDto.account",target = "account"),
+            @Mapping(source = "newDto.oked",target = "oked"),
+            @Mapping(source = "newDto.directorTin",target = "directorTin"),
+            @Mapping(source = "newDto.director",target = "director"),
+            @Mapping(source = "newDto.accountant",target = "accountant"),
+            @Mapping(source = "newDto.isBudget",target = "isBudget"),
+            @Mapping(ignore = true, target = "regCode"),
+            @Mapping(ignore = true, target = "regDate"),
+            @Mapping(ignore = true, target = "type"),
+            @Mapping(ignore = true, target = "dateCreate"),
+            @Mapping(ignore = true, target = "fileGuid"),
+            @Mapping(ignore = true, target = "basisType"),
+            @Mapping(ignore = true, target = "targetPay"),
+            @Mapping(ignore = true, target = "appDueDate"),
+            @Mapping(ignore = true, target = "id"),
+            @Mapping(ignore = true, target = "dcreated"),
+            @Mapping(ignore = true, target = "ddeleted"),
+            @Mapping(ignore = true, target = "dateFrom")
+    })
+    public abstract void updateLegalDtoToModel(@MappingTarget LegalPersonUz old, LegalPersonResponse newDto);
+
+    @Mappings({
+            @Mapping(source = "newDto.ns10Code",target = "ns10Code"),
+            @Mapping(source = "newDto.ns11Code",target = "ns11Code"),
+            @Mapping(source = "newDto.address",target = "address"),
+            @Mapping(source = "newDto.fullName",target = "fullName"),
+            @Mapping(source = "newDto.passSeries",target = "passSeries"),
+            @Mapping(source = "newDto.passNumber",target = "passNumber"),
+            @Mapping(source = "newDto.passOrg",target = "passOrg"),
+            @Mapping(expression = "java(newDto.getPassIssueDate()!=null?sdf.parse(newDto.getPassIssueDate()):null)",target = "passIssueDate"),
+            @Mapping(source = "newDto.isItd",target = "isItd"),
+            @Mapping(ignore = true, target = "id"),
+            @Mapping(ignore = true, target = "dcreated"),
+            @Mapping(expression = "java(new java.util.Date())",target = "dmodified"),
+            @Mapping(ignore = true, target = "ddeleted")
+    })
+    public abstract void updateIndividualPersonDtoToModel(@MappingTarget IndividualPersonUz old, IndividualPersonResponse newDto) throws ParseException;
 }

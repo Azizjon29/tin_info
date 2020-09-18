@@ -7,6 +7,12 @@ import java.io.Serializable;
 @Data
 public class TinInfoResponse implements Serializable {
 
+    private String dcreated;
+
+    private String dmodified;
+
+    private String ddeleted;
+
     private String tin;
 
     private String shortName;

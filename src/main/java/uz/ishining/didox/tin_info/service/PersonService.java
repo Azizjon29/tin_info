@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 
 @Service
 public class PersonService {
@@ -107,13 +108,51 @@ public class PersonService {
                 return modelDtoMapperRu.modelToDto((IndividualPersonRu) personRu);
             }
         }else{
-            return null;
+            if(personRu instanceof LegalPersonRu){
+                return updateLegalRu((LegalPersonRu) personRu);
+            }else{
+                return updateIndividualRu((IndividualPersonRu) personRu);
+            }
         }
         return null;
 
     }
 
-//    private TinInfoResponse updateLegalRu(LegalPersonUz legalPersonUz)
+    private TinInfoResponse updateLegalRu(LegalPersonRu legalPersonRu) throws IOException, ParseException {
+        Call<LegalPersonResponse> legalRequest = taxService.getLegalPersonByTin(Lang.RU.toValue(), legalPersonRu.getTin());
+        LegalPersonResponse legalResponse = legalRequest.execute().body();
+        if(legalResponse.getTin() != null){
+            modelDtoMapperRu.updateLegalDtoToModel(legalPersonRu, legalResponse);
+            NdsInfoResponse ndsInfo = searchNdsInfo(legalPersonRu.getTin());
+            if(ndsInfo!=null){
+                modelDtoMapperRu.updateNdsInfo(legalPersonRu,ndsInfo);
+            }else{
+                NdsInfoResponse nds = new NdsInfoResponse();
+                nds.setData(new NdsInfoResponse.Data());
+                modelDtoMapperRu.updateNdsInfo(legalPersonRu,nds);
+            }
+            legalPersonRuRepository.save(legalPersonRu);
+            return modelDtoMapperRu.modelToDto(legalPersonRu);
+        }else{
+            legalPersonRu.setDdeleted(new Date());
+            legalPersonRuRepository.save(legalPersonRu);
+            return modelDtoMapperRu.modelToDto(legalPersonRu);
+        }
+    }
+
+    private TinInfoResponse updateIndividualRu(IndividualPersonRu individualPersonRu) throws IOException, ParseException {
+        Call<IndividualPersonResponse> individualRequest = taxService.getIndividualPersonByTin(Lang.RU.toValue(), individualPersonRu.getTin());
+        IndividualPersonResponse individualPersonResponse = individualRequest.execute().body();
+        if(individualPersonResponse.getTin() != null){
+            modelDtoMapperRu.updateIndividualPersonDtoToModel(individualPersonRu, individualPersonResponse);
+            individualPersonRuRepository.save(individualPersonRu);
+            return modelDtoMapperRu.modelToDto(individualPersonRu);
+        }else{
+            individualPersonRu.setDdeleted(new Date());
+            individualPersonRuRepository.save(individualPersonRu);
+            return modelDtoMapperRu.modelToDto(individualPersonRu);
+        }
+    }
 
     private NdsInfoResponse searchNdsInfo(String tin) throws IOException {
         Call<NdsInfoResponse> ndsRequest = taxService.getNdsInfoByTin(tin);
@@ -156,8 +195,48 @@ public class PersonService {
                 return modelDtoMapperUz.modelToDto((IndividualPersonUz) personUz);
             }
         }else{
-            return null;
+            if(personUz instanceof LegalPersonUz){
+                return updateLegalUz((LegalPersonUz) personUz);
+            }else{
+                return updateIndividualUz((IndividualPersonUz) personUz);
+            }
         }
         return null;
+    }
+
+    private TinInfoResponse updateLegalUz(LegalPersonUz legalPersonUz) throws IOException, ParseException {
+        Call<LegalPersonResponse> legalRequest = taxService.getLegalPersonByTin(Lang.UZ.toValue(), legalPersonUz.getTin());
+        LegalPersonResponse legalResponse = legalRequest.execute().body();
+        if(legalResponse.getTin() != null){
+            modelDtoMapperUz.updateLegalDtoToModel(legalPersonUz, legalResponse);
+            NdsInfoResponse ndsInfo = searchNdsInfo(legalPersonUz.getTin());
+            if(ndsInfo!=null){
+                modelDtoMapperUz.updateNdsInfo(legalPersonUz,ndsInfo);
+            }else{
+                NdsInfoResponse nds = new NdsInfoResponse();
+                nds.setData(new NdsInfoResponse.Data());
+                modelDtoMapperUz.updateNdsInfo(legalPersonUz,nds);
+            }
+            legalPersonUzRepository.save(legalPersonUz);
+            return modelDtoMapperUz.modelToDto(legalPersonUz);
+        }else{
+            legalPersonUz.setDdeleted(new Date());
+            legalPersonUzRepository.save(legalPersonUz);
+            return modelDtoMapperUz.modelToDto(legalPersonUz);
+        }
+    }
+
+    private TinInfoResponse updateIndividualUz(IndividualPersonUz individualPersonUz) throws IOException, ParseException {
+        Call<IndividualPersonResponse> individualRequest = taxService.getIndividualPersonByTin(Lang.UZ.toValue(), individualPersonUz.getTin());
+        IndividualPersonResponse individualPersonResponse = individualRequest.execute().body();
+        if(individualPersonResponse.getTin() != null){
+            modelDtoMapperUz.updateIndividualPersonDtoToModel(individualPersonUz, individualPersonResponse);
+            individualPersonUzRepository.save(individualPersonUz);
+            return modelDtoMapperUz.modelToDto(individualPersonUz);
+        }else{
+            individualPersonUz.setDdeleted(new Date());
+            individualPersonUzRepository.save(individualPersonUz);
+            return modelDtoMapperUz.modelToDto(individualPersonUz);
+        }
     }
 }
