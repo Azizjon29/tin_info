@@ -3,6 +3,7 @@ package uz.ishining.didox.tin_info.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ public class PersonRu extends BaseEntity{
 
     protected Integer ns11Code;
 
+    @Column(columnDefinition = "TEXT")
     protected String address;
 
 
