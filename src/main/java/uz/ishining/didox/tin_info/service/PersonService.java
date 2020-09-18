@@ -7,6 +7,7 @@ import retrofit2.Call;
 import uz.ishining.didox.tin_info.dto.response.IndividualPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.LegalPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.NdsInfoResponse;
+import uz.ishining.didox.tin_info.dto.response.TinInfoResponse;
 import uz.ishining.didox.tin_info.enums.Lang;
 import uz.ishining.didox.tin_info.mapper.ModelDtoMapperRu;
 import uz.ishining.didox.tin_info.mapper.ModelDtoMapperUz;
@@ -26,6 +27,7 @@ import uz.ishining.didox.tin_info.repository.PersonUzRepository;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.Calendar;
 
 @Service
 public class PersonService {
@@ -74,7 +76,8 @@ public class PersonService {
     }
 
     private Serializable searchTinRu(String tin) throws IOException, ParseException {
-
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.MONTH,-1);
         PersonRu personRu = personRuRepository.findByTin(tin);
         if(personRu==null){
             Call<LegalPersonResponse> legalRequest = taxService.getLegalPersonByTin(Lang.RU.toValue(), tin);
@@ -96,13 +99,21 @@ public class PersonService {
                 return modelDtoMapperRu.modelToDto(individualPersonRu);
             }
 
+        }else if(personRu.getDmodified().getTime()>now.getTime().getTime()) {
+            if (personRu instanceof LegalPersonRu) {
+                return modelDtoMapperRu.modelToDto((LegalPersonRu) personRu);
+            }
+            else {
+                return modelDtoMapperRu.modelToDto((IndividualPersonRu) personRu);
+            }
+        }else{
+            return null;
         }
-        if(personRu instanceof LegalPersonRu)
-            return modelDtoMapperRu.modelToDto((LegalPersonRu)personRu);
-        else
-            return modelDtoMapperRu.modelToDto((IndividualPersonRu)personRu);
+        return null;
 
     }
+
+//    private TinInfoResponse updateLegalRu(LegalPersonUz legalPersonUz)
 
     private NdsInfoResponse searchNdsInfo(String tin) throws IOException {
         Call<NdsInfoResponse> ndsRequest = taxService.getNdsInfoByTin(tin);
@@ -114,6 +125,8 @@ public class PersonService {
         }
     }
     private Serializable searchTinUz(String tin) throws IOException, ParseException {
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.MONTH,-1);
         PersonUz personUz = personUzRepository.findByTin(tin);
         if(personUz==null){
             Call<LegalPersonResponse> legalRequest = taxService.getLegalPersonByTin(Lang.UZ.toValue(), tin);
@@ -135,10 +148,16 @@ public class PersonService {
                 return modelDtoMapperUz.modelToDto(individualPersonUz);
             }
 
+        }else if(personUz.getDmodified().getTime()>now.getTime().getTime()) {
+            if (personUz instanceof LegalPersonUz) {
+                return modelDtoMapperUz.modelToDto((LegalPersonUz) personUz);
+            }
+            else {
+                return modelDtoMapperUz.modelToDto((IndividualPersonUz) personUz);
+            }
+        }else{
+            return null;
         }
-        if(personUz instanceof LegalPersonUz)
-            return modelDtoMapperUz.modelToDto((LegalPersonUz)personUz);
-        else
-            return modelDtoMapperUz.modelToDto((IndividualPersonUz)personUz);
+        return null;
     }
 }
