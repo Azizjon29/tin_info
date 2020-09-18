@@ -8,15 +8,14 @@ import uz.ishining.didox.tin_info.dto.response.IndividualPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.LegalPersonResponse;
 import uz.ishining.didox.tin_info.dto.response.NdsInfoResponse;
 import uz.ishining.didox.tin_info.dto.response.TinInfoResponse;
-import uz.ishining.didox.tin_info.model.IndividualPersonRu;
-import uz.ishining.didox.tin_info.model.LegalPersonRu;
-import uz.ishining.didox.tin_info.service.PersonService;
+import uz.ishining.didox.tin_info.model.IndividualPersonUz;
+import uz.ishining.didox.tin_info.model.LegalPersonUz;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @Mapper(componentModel = "spring")
-public abstract class ModelDtoMapperRu {
+public abstract class ModelDtoMapperUz {
 
 
     protected static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -52,7 +51,7 @@ public abstract class ModelDtoMapperRu {
             @Mapping(ignore = true, target = "ddeleted"),
             @Mapping(ignore = true, target = "dateFrom")
     })
-    public abstract LegalPersonRu legalDtoToModel(LegalPersonResponse dto);
+    public abstract LegalPersonUz legalDtoToModel(LegalPersonResponse dto);
 
     @Mappings({
             @Mapping(source = "dto.data.tin",target = "tin"),
@@ -84,7 +83,7 @@ public abstract class ModelDtoMapperRu {
             @Mapping(ignore = true, target = "dmodified"),
             @Mapping(ignore = true, target = "ddeleted")
     })
-    public abstract LegalPersonRu ndsDtoToModel(NdsInfoResponse dto);
+    public abstract LegalPersonUz ndsDtoToModel(NdsInfoResponse dto);
 
     @Mappings({
             @Mapping(source = "dto.tin",target = "tin"),
@@ -102,7 +101,7 @@ public abstract class ModelDtoMapperRu {
             @Mapping(ignore = true, target = "dmodified"),
             @Mapping(ignore = true, target = "ddeleted")
     })
-    public abstract IndividualPersonRu individualPersonDtoToModel(IndividualPersonResponse dto) throws ParseException;
+    public abstract IndividualPersonUz individualPersonDtoToModel(IndividualPersonResponse dto) throws ParseException;
 
 
     @Mappings({
@@ -135,7 +134,7 @@ public abstract class ModelDtoMapperRu {
             @Mapping(ignore = true, target = "isBudget"),
             @Mapping(ignore = true, target = "oked")
     })
-    public abstract void updateNdsInfo(@MappingTarget LegalPersonRu model, NdsInfoResponse dto) throws ParseException;
+    public abstract void updateNdsInfo(@MappingTarget LegalPersonUz model, NdsInfoResponse dto) throws ParseException;
 
     @Mappings({
             @Mapping(source = "model.tin", target = "tin"),
@@ -156,7 +155,7 @@ public abstract class ModelDtoMapperRu {
             @Mapping(ignore = true, target = "passIssueDate"),
             @Mapping(ignore = true, target = "districtId")
     })
-    public abstract TinInfoResponse modelToDto(LegalPersonRu model);
+    public abstract TinInfoResponse modelToDto(LegalPersonUz model);
     @Mappings({
             @Mapping(source = "model.tin", target = "tin"),
             @Mapping(source = "model.fullName", target = "shortName"),
@@ -177,5 +176,5 @@ public abstract class ModelDtoMapperRu {
             @Mapping(ignore = true, target = "directorTin"),
             @Mapping(ignore = true, target = "districtId")
     })
-    public abstract TinInfoResponse modelToDto(IndividualPersonRu model);
+    public abstract TinInfoResponse modelToDto(IndividualPersonUz model);
 }

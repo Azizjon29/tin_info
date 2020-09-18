@@ -5,6 +5,9 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
 
 @Entity
 @DiscriminatorValue("LEGAL")
@@ -37,11 +40,13 @@ public class LegalPersonRu extends PersonRu {
     //nds
     private String regCode;
 
-    private String regDate;
+    @Temporal(TemporalType.DATE)
+    private Date regDate;
 
     private String type;
 
-    private String dateCreate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreate;
 
     private String fileGuid;
 
@@ -51,5 +56,6 @@ public class LegalPersonRu extends PersonRu {
 
     private String appDueDate;
 
-    private String dateFrom;
+    @Temporal(TemporalType.DATE)
+    private Date dateFrom;
 }

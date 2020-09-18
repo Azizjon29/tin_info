@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.Date;
+import java.util.StringJoiner;
 
 @Entity
 @DiscriminatorValue("INDIVIDUAL")
@@ -24,4 +25,11 @@ public class IndividualPersonUz extends PersonUz{
     private Date passIssueDate;
 
     private Boolean isItd;
+
+    public String getPassport(){
+        StringJoiner joiner = new StringJoiner("");
+        joiner.add(passSeries);
+        joiner.add(passNumber);
+        return joiner.toString();
+    }
 }

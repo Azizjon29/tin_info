@@ -16,6 +16,7 @@ import uz.ishining.didox.tin_info.service.TaxService;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -30,7 +31,7 @@ public class TinController {
 
     @GetMapping("/taxinfo")
     public Serializable getTinInfo(@RequestParam String tin,
-                                   @RequestParam(required = false, defaultValue = "ru") String lang) throws IOException {
+                                   @RequestParam(required = false, defaultValue = "ru") String lang) throws IOException, ParseException {
         return personService.getInfo(tin, Lang.fromValue(lang));
     }
 }
